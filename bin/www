@@ -1,45 +1,34 @@
 #!/usr/bin/env node
 
-/**
- * Module dependencies.
- */
+/*** Module dependencies.*/
 
-const app = require('../app');
-const debug = require('debug')('mongo-back:server');
-const http = require('http');
-const dotenv = require("dotenv");
+const Path = require('path');
+const dotenv = require('dotenv');
+const path = Path.join(__dirname, '../', '.env');
 const {initializeService} = require("../services/initializer");
 
-const startApp = async () => {
-    /**
-     * Get port from environment and store in Express.
-     */
+dotenv.config({path});
 
+const startApp = () => {
+    const app = require('../app');
+    const debug = require('debug')('mongo-call-reacords:server');
+    const http = require('http');
+
+    /*** Get port from environment and store in Express.*/
     const port = normalizePort(process.env.PORT || '5000');
     app.set('port', port);
-    dotenv.config();
 
-    /**
-     * Create HTTP server.
-     */
-
+    /*** Create HTTP server.*/
     const server = http.createServer(app);
 
-    /**
-     * Listen on provided port, on all network interfaces.
-     */
-
+    /*** Listen on provided port, on all network interfaces.*/
     server.listen(port, () => {
-        console.log(`⚡️[server]: Server is running at ${process.env.SERVER_HOST}${process.env.SERVER_PORT}`);
-    })
-
+        console.log("⚡️[server]: Server running on port " + port)
+    });
     server.on('error', onError);
     server.on('listening', onListening);
 
-    /**
-     * Normalize a port into a number, string, or false.
-     */
-
+    /*** Normalize a port into a number, string, or false.*/
     function normalizePort(val) {
         const port = parseInt(val, 10);
 
