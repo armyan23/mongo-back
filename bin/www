@@ -36,28 +36,20 @@ const startApp = () => {
             // named pipe
             return val;
         }
-
         if (port >= 0) {
             // port number
             return port;
         }
-
         return false;
     }
 
-    /**
-     * Event listener for HTTP server "error" event.
-     */
-
+    /*** Event listener for HTTP server "error" event.*/
     function onError(error) {
         if (error.syscall !== 'listen') {
             throw error;
         }
 
-        const bind = typeof port === 'string'
-            ? 'Pipe ' + port
-            : 'Port ' + port;
-
+        const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
         // handle specific listen errors with friendly messages
         switch (error.code) {
             case 'EACCES':
@@ -73,10 +65,7 @@ const startApp = () => {
         }
     }
 
-    /**
-     * Event listener for HTTP server "listening" event.
-     */
-
+    /*** Event listener for HTTP server "listening" event.*/
     function onListening() {
         const addr = server.address();
         const bind = typeof addr === 'string'
@@ -84,7 +73,8 @@ const startApp = () => {
             : 'port ' + addr.port;
         debug('Listening on ' + bind);
     }
-}
+};
+initializeService(startApp)
 
 initializeService().then(async () => {
     await startApp();
