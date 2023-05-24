@@ -12,6 +12,9 @@
 /.next/
 /out/
 
+# Images
+/public/users
+
 # production
 /build
 

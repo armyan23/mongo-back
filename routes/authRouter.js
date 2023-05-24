@@ -1,8 +1,10 @@
 const express = require("express");
-const router = express.Router();
+const multer = require("multer");
 const authController = require("../controller/authController");
 
-router.post("/sign-up", authController.signUp);
+const router = express.Router();
+
+router.post("/sign-up", multer().single("photo"), authController.signUp);
 router.post("/sign-in", authController.signIn);
 
 module.exports = router;

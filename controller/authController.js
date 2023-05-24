@@ -1,23 +1,38 @@
 const bcrypt = require("bcrypt");
-const { createBcrypt, jwtGenerator } = require("../utils/helpers");
+
 const Users = require("../models/user");
+const { authValidations } = require("../validations/authValidations");
+const { createBcrypt, jwtGenerator } = require("../utils/helpers");
+const { uploadFile } = require("../utils/file");
 
 const signUp = async (req, res) => {
   try {
-    const { body } = req;
+    const { body, file } = req;
 
-    const userIsExist = await Users.findOne({ email: body.email });
+    const { error, value } = authValidations.signUp(body, file);
+    if (error) {
+      return res.status(400).json({
+        message: error.details[0].message,
+      });
+    }
+
+    const userIsExist = await Users.findOne({ email: value.email });
     if (userIsExist) {
       return res.status(400).json({
         message: "The user already exist",
       });
     }
 
-    const bcryptPassword = await createBcrypt(body.password);
+    let photo = null;
+    if (file) {
+      photo = await uploadFile("public/users", file);
+    }
 
+    const bcryptPassword = await createBcrypt(value.password);
     const user = await Users.create({
       ...body,
       password: bcryptPassword,
+      photo,
     });
 
     return res.send({
@@ -25,6 +40,7 @@ const signUp = async (req, res) => {
       message: "Congratulations, You are successfully registered!",
     });
   } catch (e) {
+    console.log("Error: signUp", e);
     return res.status(500).json({
       message: "Internal Error",
     });
@@ -33,16 +49,24 @@ const signUp = async (req, res) => {
 
 const signIn = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { body } = req;
 
-    const user = await Users.findOne({ email: email });
+    const { error, value } = authValidations.signIn(body);
+
+    if (error) {
+      return res.status(400).json({
+        message: error.details[0].message,
+      });
+    }
+
+    const user = await Users.findOne({ email: value.email });
     if (!user) {
       return res.status(400).json({
         message: "User Doesn't exist",
       });
     }
 
-    const validPassword = await bcrypt.compare(password, user.password);
+    const validPassword = await bcrypt.compare(value.password, user.password);
     if (!validPassword) {
       return res.status(401).send({
         message: "Password not valid.",
@@ -55,6 +79,7 @@ const signIn = async (req, res) => {
       data: userToken,
     });
   } catch (e) {
+    console.log("Error: signIn", e);
     return res.status(500).json({
       message: "Internal Error",
     });
