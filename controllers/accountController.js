@@ -84,7 +84,7 @@ const updateAccountPhoto = async (req, res) => {
     await user.save();
 
     return res.send({
-      user,
+      data: user,
       message: "Updated Account photo",
     });
   } catch (e) {
@@ -105,7 +105,7 @@ const updateAccountDelete = async (req, res) => {
     await user.save();
 
     return res.send({
-      user,
+      data: user,
       message: "Account photo deleted.",
     });
   } catch (e) {
