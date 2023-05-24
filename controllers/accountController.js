@@ -14,7 +14,7 @@ const getProfile = async (req, res) => {
 const updateProfile = async (req, res) => {
   try {
     return res.send({
-      message: "You are successfully Updated photo!",
+      message: "Updated photo!",
     });
   } catch (e) {
     console.log("Error: updateProfile", e);
