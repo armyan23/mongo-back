@@ -13,7 +13,6 @@ authenticationMiddleware = async (req, res, next) => {
 
     const payload = jwt.verify(token, `${process.env.JWT_SECRET}`);
     const user = await Users.findOne({ _id: payload.id }).select([
-      // "-_id",
       "-password",
       "-__v",
     ]);
