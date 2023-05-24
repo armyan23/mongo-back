@@ -20,4 +20,11 @@ const uploadFile = async (filePath, file) => {
   return `${process.env.API_URL}/${filePath}/${namePrefix}_${fileName}`;
 };
 
-module.exports = { uploadFile };
+async function deleteImage(url) {
+  const path = url?.replace(process.env.API_URL, `.`);
+  await fs.unlink(path, (err) => {
+    if (err) console.log(err);
+  });
+}
+
+module.exports = { uploadFile, deleteImage };

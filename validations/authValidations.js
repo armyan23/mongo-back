@@ -4,7 +4,7 @@ const authValidations = {
   signUp: function (body, file) {
     const schema = Joi.object({
       name: Joi.string().min(1).max(30).required(),
-      password: Joi.string().min(1).max(30).required(),
+      password: Joi.string().min(6).max(30).required(),
       email: Joi.string().email().required(),
       dateOfBirthday: Joi.date().required(),
       gender: Joi.string().allow("", null),
