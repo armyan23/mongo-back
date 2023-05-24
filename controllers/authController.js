@@ -29,14 +29,17 @@ const signUp = async (req, res) => {
     }
 
     const bcryptPassword = await createBcrypt(value.password);
-    const user = await Users.create({
+    await Users.create({
       ...body,
       password: bcryptPassword,
       photo,
     });
 
     return res.send({
-      data: user,
+      data: {
+        ...body,
+        photo,
+      },
       message: "Congratulations, You are successfully registered!",
     });
   } catch (e) {

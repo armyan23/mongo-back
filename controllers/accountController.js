@@ -1,4 +1,4 @@
-const getProfile = async (req, res) => {
+const getAccount = async (req, res) => {
   try {
     return res.send({
       data: "getProfile",
@@ -11,7 +11,7 @@ const getProfile = async (req, res) => {
   }
 };
 
-const updateProfile = async (req, res) => {
+const updateAccount = async (req, res) => {
   try {
     return res.send({
       message: "Updated photo!",
@@ -25,6 +25,6 @@ const updateProfile = async (req, res) => {
 };
 
 module.exports = {
-  getProfile,
-  updateProfile,
+  getAccount,
+  updateAccount,
 };
