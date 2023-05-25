@@ -89,7 +89,23 @@ const signIn = async (req, res) => {
   }
 };
 
+const authenticated = async (req, res) => {
+  try {
+    const { user } = req;
+
+    return res.send({
+      data: user,
+    });
+  } catch (e) {
+    console.log("Error: getProfile", e);
+    return res.status(500).json({
+      message: "Internal Error",
+    });
+  }
+};
+
 module.exports = {
   signUp,
   signIn,
+  authenticated,
 };

@@ -3,7 +3,7 @@ const Users = require("../models/user");
 
 authenticationMiddleware = async (req, res, next) => {
   try {
-    const token = req.header("authorization");
+    const token = req.header("Authorization");
 
     if (!token) {
       return res.status(401).send({
