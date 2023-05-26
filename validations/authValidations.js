@@ -11,7 +11,7 @@ const authValidations = {
       photo: Joi.string().allow("", null),
     });
 
-    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+    if (file?.originalname && !file?.originalname.match(/\.(jpg|jpeg|png)$/)) {
       return {
         error: {
           details: [

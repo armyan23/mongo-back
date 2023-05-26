@@ -10,7 +10,7 @@ const accountValidations = {
   },
 
   photo: function (file) {
-    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+    if (file?.originalname && !file?.originalname.match(/\.(jpg|jpeg|png)$/)) {
       return {
         message: "Please upload a valid image file - jpg|jpeg|png",
       };

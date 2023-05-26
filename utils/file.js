@@ -9,7 +9,7 @@ const uploadFile = async (filePath, file) => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
-  const fileName = file.originalname.toLowerCase().split(" ").join("-");
+  const fileName = file?.originalname.toLowerCase().split(" ").join("-");
   const url = path.join(
     path.resolve(),
     ".",
