@@ -76,7 +76,9 @@ const updateAccountPhoto = async (req, res) => {
 
     let photo = null;
     if (file) {
-      await deleteImage(user.photo);
+      if (user?.photo) {
+        await deleteImage(user.photo);
+      }
       photo = await uploadFile("public/users", file);
     }
 
@@ -95,7 +97,7 @@ const updateAccountPhoto = async (req, res) => {
   }
 };
 
-const updateAccountDelete = async (req, res) => {
+const deletePhoto = async (req, res) => {
   try {
     const { user } = req;
 
@@ -121,5 +123,5 @@ module.exports = {
   updateAccountName,
   updateAccountPassword,
   updateAccountPhoto,
-  updateAccountDelete,
+  deletePhoto,
 };

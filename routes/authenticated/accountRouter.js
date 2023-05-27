@@ -14,6 +14,6 @@ router.patch(
   multer().single("photo"),
   accountController.updateAccountPhoto
 );
-router.delete("/photo", accountController.updateAccountDelete);
+router.delete("/photo", accountController.deletePhoto);
 
 module.exports = router;
