@@ -2,13 +2,13 @@ const Users = require("../models/user");
 
 const getPeople = async (req, res) => {
   try {
-    const users = await Users.find().select([
+    const { user } = req;
+    const users = await Users.find({ email: { $ne: user.email } }).select([
       "-password",
       "-__v",
       "-createdAt",
       "-updatedAt",
       "-email",
-      "-gender",
     ]);
 
     return res.send({
